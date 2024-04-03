@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 
-class UserChallenges(models.Model):
+class UserChallenge(models.Model):
     title = models.CharField(max_length=30, verbose_name='Название')
     description = models.TextField(verbose_name='Описание')
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Создатель')
@@ -27,7 +27,7 @@ class Article(models.Model):
         ordering = ['-published']
 
 
-class Comments(models.Model):
+class Comment(models.Model):
     content = models.TextField(verbose_name='Содержание')
     published = models.DateTimeField(auto_now_add=True, verbose_name='Дата публикации')
     author = models.ForeignKey(User, on_delete=models.PROTECT, verbose_name='Автор')
@@ -39,7 +39,7 @@ class Comments(models.Model):
         ordering = ['-published']
 
 
-class GlobalChallenges(models.Model):
+class GlobalChallenge(models.Model):
     title = models.CharField(max_length=30, verbose_name='Название')
     description = models.TextField(verbose_name='Описание')
     time_start = models.DateTimeField(auto_now_add=True, verbose_name='Дата начала')
@@ -51,17 +51,17 @@ class GlobalChallenges(models.Model):
         ordering = ['-time_start']
 
 
-class Achievements(models.Model):
+class Achievement(models.Model):
     title = models.CharField(max_length=30, verbose_name='Название')
-    global_challenge = models.ForeignKey(GlobalChallenges, on_delete=models.CASCADE, verbose_name='Глобальный Челлендж')
+    global_challenge = models.ForeignKey(GlobalChallenge, on_delete=models.CASCADE, verbose_name='Глобальный Челлендж')
 
     class Meta:
         verbose_name = 'Достижение'
         verbose_name_plural = 'Достижения'
 
 
-class UsersGlobalChallenges(models.Model):
-    global_challenge = models.ForeignKey(GlobalChallenges, on_delete=models.CASCADE, verbose_name='Глобальный челлендж')
+class UsersGlobalChallenge(models.Model):
+    global_challenge = models.ForeignKey(GlobalChallenge, on_delete=models.CASCADE, verbose_name='Глобальный челлендж')
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Пользователь')
     completed = models.BooleanField(default=False, verbose_name='Выполнено')
 
