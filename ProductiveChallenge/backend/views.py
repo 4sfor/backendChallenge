@@ -1,35 +1,44 @@
 # from django.shortcuts import render
-from rest_framework import generics
-from .models import *
+from rest_framework import viewsets
+
 from .serializers import *
 
 
 # Create your views here.
 
 
-class GlobalChallenge(generics.ListAPIView):
-    queryset = None
+class GlobalChallengeView(viewsets.ModelViewSet):
+    queryset = GlobalChallenge.objects.all()
+    serializer_class = GlobalChallengeSerializer
 
 
-class UserChallenge(generics.ListAPIView):
-    pass
 
 
-class Comment(generics.ListAPIView):
-    queryset = None
+class UserChallengeView(viewsets.ModelViewSet):
+    queryset = UserChallenge.objects.all()
+    serializer_class = UserChallengeSerializer
 
 
-class Achievement(generics.ListAPIView):
-    queryset = None
+class CommentView(viewsets.ModelViewSet):
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializer
 
 
-class Article(generics.ListAPIView):
-    queryset = None
+class AchievementView(viewsets.ModelViewSet):
+    queryset = Achievement.objects.all()
+    serializer_class = AchievementSerializer
 
 
-class UserInformation(generics.ListAPIView):
-    queryset = None
+class ArticleView(viewsets.ModelViewSet):
+    queryset = Article.objects.all()
+    serializer_class = ArticleSerializer
 
 
-class UserGlobalChallenge(generics.ListAPIView):
-    queryset = None
+class UserInformationView(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserInfoSerializer
+
+
+class UserGlobalChallengeView(viewsets.ModelViewSet):
+    queryset = UsersGlobalChallenge.objects.all()
+    serializer_class = UserGlobalChallengeSerializer

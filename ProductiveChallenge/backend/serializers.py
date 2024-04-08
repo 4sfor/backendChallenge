@@ -6,47 +6,48 @@ from .models import *
 class UserChallengeSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserChallenge
-        fields = ()
-        pass
+        fields = ('title', 'description', 'user')
+
 
 
 class ArticleSerializer(serializers.ModelSerializer):
     class Meta:
         model = Article
-        fields = ()
-        pass
+        fields = ('title', 'description')
+
 
 
 class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
-        fields = ()
-        pass
+        fields = ('content',  'article_id', 'author_id')
+        read_only_fields = ('published',)
+
 
 
 class GlobalChallengeSerializer(serializers.ModelSerializer):
     class Meta:
         model = GlobalChallenge
-        fields = ()
-        pass
+        fields = ('title', 'description', 'time_start', 'time_end')
+
 
 
 class AchievementSerializer(serializers.ModelSerializer):
     class Meta:
         model = Achievement
-        fields = ()
-        pass
+        fields = ('title', 'global_challenge_id')
+
 
 
 class UserGlobalChallengeSerializer(serializers.ModelSerializer):
     class Meta:
         model = UsersGlobalChallenge
-        fields = ()
-        pass
+        fields = ('completed', 'global_challenge_id', 'user_id')
+
 
 
 class UserInfoSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ()
-        pass
+        fields = ('username', 'first_name', 'last_name', 'email')
+

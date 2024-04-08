@@ -1,12 +1,13 @@
-from django.urls import path
+from django.urls import path, include
 from .views import *
+from .routers import *
 
 urlpatterns = [
-    path('/global-challenge', GlobalChallenge.as_view()),
-    path('/article', Article.as_view()),
-    path('/acivement', Achievement.as_view()),
-    path('/user-chalange', UserChallenge.as_view()),
-    path('/comment', Comment.as_view()),
-    path('/user-info', UserInformation.as_view()),
-    path('/user-global-challenge', UserGlobalChallenge.as_view())
+    path('', include(routerArticle.urls)),
+    path('', include(routerGlobalChallenge.urls)),
+    path('', include(routerAchievement.urls)),
+    path('', include(routerUserChallenge.urls)),
+    path('', include(routerComment.urls)),
+    path('', include(routerUserInfo.urls)),
+    path('', include(routerUserGlobalChallenge.urls)),
 ]
