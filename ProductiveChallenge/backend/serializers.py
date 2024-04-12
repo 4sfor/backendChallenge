@@ -4,23 +4,26 @@ from .models import *
 
 
 class UserChallengeSerializer(serializers.ModelSerializer):
+    user = serializers.HiddenField(default=serializers.CurrentUserDefault())
     class Meta:
         model = UserChallenge
-        fields = ('title', 'description', 'user')
-
+        fields =('user', 'title', 'description')
 
 
 class ArticleSerializer(serializers.ModelSerializer):
+    author = serializers.HiddenField(default=serializers.CurrentUserDefault())
     class Meta:
         model = Article
-        fields = ('title', 'description')
+        fields = ('title', 'description', 'author')
+        read_only_fields = ('valution', 'published')
 
 
 
 class CommentSerializer(serializers.ModelSerializer):
+    author= serializers.HiddenField(default=serializers.CurrentUserDefault())
     class Meta:
         model = Comment
-        fields = ('content',  'article_id', 'author_id')
+        fields = ('content',  'article_id', 'author')
         read_only_fields = ('published',)
 
 
@@ -40,9 +43,10 @@ class AchievementSerializer(serializers.ModelSerializer):
 
 
 class UserGlobalChallengeSerializer(serializers.ModelSerializer):
+    user = serializers.HiddenField(default=serializers.CurrentUserDefault())
     class Meta:
         model = UsersGlobalChallenge
-        fields = ('completed', 'global_challenge_id', 'user_id')
+        fields = ('completed', 'global_challenge_id', 'user')
 
 
 

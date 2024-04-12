@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 class UserChallenge(models.Model):
     title = models.CharField(max_length=30, verbose_name='Название')
     description = models.TextField(verbose_name='Описание')
-    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Создатель')
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Создатель')
 
     class Meta:
         verbose_name = 'Челледж пользователя'
@@ -18,7 +18,8 @@ class Article(models.Model):
     title = models.CharField(max_length=30, verbose_name='Название')
     description = models.TextField(verbose_name='описание')
     published = models.DateTimeField(auto_now_add=True, verbose_name='Дата публикации')
-    autor = models.ForeignKey(User, on_delete=models.PROTECT, verbose_name='Автор')
+    owner = models.ForeignKey(User, on_delete=models.PROTECT, verbose_name='Автор')
+    is_published = models.BooleanField(default=False, verbose_name='Опубликована')
     valuation = models.FloatField(verbose_name='Оценка')
 
     class Meta:
@@ -30,7 +31,7 @@ class Article(models.Model):
 class Comment(models.Model):
     content = models.TextField(verbose_name='Содержание')
     published = models.DateTimeField(auto_now_add=True, verbose_name='Дата публикации')
-    author = models.ForeignKey(User, on_delete=models.PROTECT, verbose_name='Автор')
+    owner = models.ForeignKey(User, on_delete=models.PROTECT, verbose_name='Автор')
     article = models.ForeignKey(Article, on_delete=models.CASCADE, verbose_name='Статья')
 
     class Meta:
@@ -62,7 +63,7 @@ class Achievement(models.Model):
 
 class UsersGlobalChallenge(models.Model):
     global_challenge = models.ForeignKey(GlobalChallenge, on_delete=models.CASCADE, verbose_name='Глобальный челлендж')
-    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Пользователь')
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Пользователь')
     completed = models.BooleanField(default=False, verbose_name='Выполнено')
 
     class Meta:
