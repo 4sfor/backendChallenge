@@ -7,7 +7,7 @@ pytz==2024.1
 sqlparse==0.4.4
 typing_extensions==4.9.0
 tzdata==2024.1
-#models stats 
-#у юзера +поле с конфед. если закрыто и запрос не от владельца то отдаем только имя 
-# models support 
+
+
+
         
