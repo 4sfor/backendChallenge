@@ -68,3 +68,38 @@ class UsersGlobalChallenge(models.Model):
 
     class Meta:
         verbose_name = 'Пользователи учавствующие в глобальный челленджах'
+
+
+class Stats(models.Model):
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Пользователь')
+    challenge_completed = models.IntegerField(default=0, verbose_name='Челленждей выполнено')
+    challenge_plans = models.IntegerField(default=0, verbose_name='Челленждей запланировано')
+    challenge_active = models.IntegerField(default=0, verbose_name='Челленждей запланировано')
+    friends = models.IntegerField(default=0, verbose_name='Количесвто друзей')
+    achievements_received =models.IntegerField(default=0, verbose_name='Получения достижений')
+    challenge_created = models.IntegerField(default=0, verbose_name='Челлeнджей создано')
+
+    class Meta:
+        verbose_name = 'Статистика'
+        verbose_name_plural = 'Статистика'
+
+
+class Support(models.Model):
+    owner = models.ForeignKey(User, on_delete=models.PROTECT, verbose_name='Пользователь')
+    title = models.CharField(max_length=30, verbose_name='Тайтл')
+    description = models.TextField(verbose_name='Описание')
+    solved = models.BooleanField(default=False, verbose_name='Решено')
+
+    class Meta:
+        verbose_name = 'Поддержка'
+        verbose_name_plural ='Поддержка'
+
+
+class UserConf(models.Model):
+    owner = models.OneToOneField(User, on_delete=models.CASCADE)
+    conf = models.BooleanField(default=True, verbose_name='Закрытый аккаунт')
+    #img
+
+    class Meta:
+        verbose_name = 'Профиль'
+        verbose_name_plural = 'Профили'
