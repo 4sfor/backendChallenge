@@ -11,6 +11,12 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+import os
+import json
+
+secret_file_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'secret.json')
+with open(secret_file_path) as secrets_file:
+    secrets = json.load(secrets_file)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,13 +26,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = ''
+SECRET_KEY = secrets.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
-
+ALLOWED_HOSTS = ['restchallenge.containers.cloud.ru', 'localhost', '127.0.0.1','restchallenge.internal.containers.cloud.ru']
+CSRF_TRUSTED_ORIGINS = ['https://restchallenge.containers.cloud.ru']
 
 # Application definition
 
@@ -78,9 +84,9 @@ WSGI_APPLICATION = 'ProductiveChallenge.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'eunptaho',
-        'USER': 'eunptaho',
-        'PASSWORD': 'AiyNsJvnh37NmBUhW4YATlsAF9j1D-ob',
+        'NAME':  secrets.get('DB_NAME'),
+        'USER': secrets.get('DB_USER'),
+        'PASSWORD': secrets.get('DB_PASSWORD'),
         'HOST': 'snuffleupagus.db.elephantsql.com',
         'PORT': 5432
     }
@@ -120,8 +126,8 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
-
-STATIC_URL = 'static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_URL = '/static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
