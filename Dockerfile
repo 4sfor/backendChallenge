@@ -17,5 +17,8 @@ RUN pip install --no-cache-dir --upgrade pip && \
 # Копируем остальные файлы в /app
 COPY . .
 
+# Перемещаемся внутрь каталога ProductiveChallenge
+WORKDIR /app/ProductiveChallenge
+
 # Запуск приложения с Gunicorn
 CMD ["gunicorn", "ProductiveChallenge.wsgi:application", "--bind", "0.0.0.0:8080"]
