@@ -1,22 +1,21 @@
-# Используем базовый образ Python
-FROM python:3.12
+# Базовый образ Python
+FROM python:3.12-slim
 
-# Устанавливаем переменную окружения PYTHONUNBUFFERED для обеспечения вывода логов в реальном времени без буферизации
+# Устанавливаем переменную окружения
 ENV PYTHONUNBUFFERED 1
 
-# Устанавливаем рабочую директорию в /app
+# Создаем рабочую директорию
 WORKDIR /app
 
-# Копируем файл зависимостей в рабочую директорию
-COPY ./requirements.txt /app/requirements.txt
+# Копируем requirements.txt в /app
+COPY requirements.txt .
 
-# Устанавливаем зависимости
+# Обновляем pip и устанавливаем зависимости
+RUN pip install --no-cache-dir --upgrade pip && \
+    pip install --no-cache-dir -r requirements.txt
 
-RUN pip install --no-cache-dir --upgrade -r /app/requirements.txt
+# Копируем остальные файлы в /app
+COPY . .
 
-# Копируем остальные файлы приложения в рабочую директорию
-COPY . /app/
-
-
-# Команда для запуска приложения с использованием Gunicorn
+# Запуск приложения с Gunicorn
 CMD ["gunicorn", "ProductiveChallenge.wsgi:application", "--bind", "0.0.0.0:8080"]
