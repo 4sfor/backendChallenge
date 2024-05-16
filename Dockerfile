@@ -19,4 +19,4 @@ COPY . /app/
 
 
 # Команда для запуска приложения с использованием Gunicorn
-CMD ["gunicorn", "ProductiveChallenge.wsgi:application", "--bind", "0.0.0.0:8080"]
+CMD ["gunicorn", "ProductiveChallenge.ProductiveChallenge.wsgi:application", "--bind", "0.0.0.0:8080"]
