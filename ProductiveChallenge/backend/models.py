@@ -1,8 +1,16 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.conf import settings
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from rest_framework.authtoken.models import Token
 
 
 # Create your models here.
+@receiver(post_save, sender=settings.AUTH_USER_MODEL)
+def create_auth_token(sender, instance=None, created=False, **kwargs):
+    if created:
+        Token.objects.create(user=instance)
 
 class UserChallenge(models.Model):
     title = models.CharField(max_length=30, verbose_name='Название')
@@ -20,7 +28,7 @@ class Article(models.Model):
     published = models.DateTimeField(auto_now_add=True, verbose_name='Дата публикации')
     owner = models.ForeignKey(User, on_delete=models.PROTECT, verbose_name='Автор')
     is_published = models.BooleanField(default=False, verbose_name='Опубликована')
-    valuation = models.FloatField(verbose_name='Оценка')
+    valuation = models.FloatField(verbose_name='Оценка', default=0)
 
     class Meta:
         verbose_name = 'Статья'
@@ -40,9 +48,17 @@ class Comment(models.Model):
         ordering = ['-published']
 
 
+class CatGlobalChallenge(models.Model):
+    title = models.CharField(max_length=50, verbose_name="Категория")
+
+    class Meta:
+        verbose_name = "Категория челленждей"
+        verbose_name_plural = "Категории челледжей"
+
 class GlobalChallenge(models.Model):
     title = models.CharField(max_length=30, verbose_name='Название')
     description = models.TextField(verbose_name='Описание')
+    cat = models.ForeignKey(CatGlobalChallenge, on_delete=models.PROTECT, verbose_name='Категория')
     time_start = models.DateTimeField(auto_now_add=True, verbose_name='Дата начала')
     time_end = models.DateTimeField(auto_now_add=False, verbose_name='Дата окончания')
 
@@ -50,6 +66,9 @@ class GlobalChallenge(models.Model):
         verbose_name = 'Глобальный челлендж'
         verbose_name_plural = 'Глобальные челленджи'
         ordering = ['-time_start']
+
+
+
 
 
 class Achievement(models.Model):

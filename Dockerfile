@@ -21,4 +21,4 @@ COPY . .
 WORKDIR /app/ProductiveChallenge
 
 # Запуск приложения с Gunicorn
-CMD ["gunicorn", "ProductiveChallenge.wsgi:application", "--bind", "0.0.0.0:8080"]
+CMD ["gunicorn", "ProductiveChallenge.wsgi:application", "--bind", "0.0.0.0:5000"]
